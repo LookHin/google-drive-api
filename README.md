@@ -14,18 +14,29 @@ $obj = new GoogleDriveApi($strClientId, $strClientSecret);
 $obj->setAccessTokenFromRefreshToken($strRefreshToken);
 
 // List File From Root Folder
-//$arrFile = $obj->ListFileAndFolder();
+$arrFile = $obj->ListFileAndFolder("root");
+print_r($arrFile);
 
-// List File From Folder Id
-//$arrFile = $obj->ListFileAndFolder("_FILE_OR_FOLDER_ID_");
-
-//$obj->CreateFolder("FolderName");
-
-//$obj->Delete("_FILE_OR_FOLDER_ID_");
-
+// # List File From Folder Id
+//$arrFile = $obj->ListFileAndFolder("_PARENT_FOLDER_ID_");
 //print_r($arrFile);
 
-$obj->Upload();
+// # Create Folder In Root Folder
+//$obj->CreateFolder("root", "_NEW_FOLDER_NAME_");
+
+// # Create Folder In Parent Folder
+//$obj->CreateFolder("_PARENT_FOLDER_ID_", "_NEW_FOLDER_NAME_");
+
+// # Delete File & Folder
+//$obj->Delete("_FILE_OR_FOLDER_ID_");
+
+// # Upload File To Root Folder
+// $arrResult = $obj->Upload("root", "no-face.png");
+// print_r($arrResult);
+
+// # Upload File To Parent Folder
+// $arrResult = $obj->Upload("_PARENT_FOLDER_ID_", "no-face.png");
+// print_r($arrResult);
 
 ```
 ## Test
