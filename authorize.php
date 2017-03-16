@@ -21,8 +21,8 @@ if(empty($_GET['code'])){
   $strAuthScope = "https://www.googleapis.com/auth/drive";
   $strAuthorizetUrl = $obj->getAuthorizetUrl($strAuthScope);
 
-	header("Location: {$strAuthorizetUrl}");
-	exit;
+  header("Location: {$strAuthorizetUrl}");
+  exit;
 
 }else{
 
