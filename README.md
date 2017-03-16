@@ -31,6 +31,12 @@ $obj->Upload();
 ## Test
 Test Test
 
+## Reference
+[https://developers.google.com/identity/protocols/OAuth2WebServer](https://developers.google.com/identity/protocols/OAuth2WebServer)  
+[https://developers.google.com/drive/v3/reference/files](https://developers.google.com/drive/v3/reference/files)  
+[https://developers.google.com/drive/v3/web/resumable-upload](https://developers.google.com/drive/v3/web/resumable-upload)  
+
+
 ## About Us
 Name : Khwanchai Kaewyos (LookHin)  
 Email : khwanchai@gmail.com
