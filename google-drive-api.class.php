@@ -31,7 +31,7 @@ class GoogleDriveApi{
     $strAuthScope = urlencode($scope);
     $strRedirectUrl = urlencode($this->strScriptUrl);
 
-  	$strAuthorizetUrl = "https://accounts.google.com/o/oauth2/v2/auth?scope={$strAuthScope}&access_type=offline&redirect_uri={$strRedirectUrl}&response_type=code&client_id={$this->strClientId}";
+    $strAuthorizetUrl = "https://accounts.google.com/o/oauth2/v2/auth?scope={$strAuthScope}&access_type=offline&redirect_uri={$strRedirectUrl}&response_type=code&client_id={$this->strClientId}";
 
     return $strAuthorizetUrl;
   }
@@ -69,26 +69,26 @@ class GoogleDriveApi{
     $this->strRefreshToken = $strRefreshToken;
 
     $arrPostData = array();
-  	$arrPostData['client_id'] = $this->strClientId;
-  	$arrPostData['client_secret'] = $this->strClientSecret;
-  	$arrPostData['refresh_token'] = $this->strRefreshToken;
-  	$arrPostData['grant_type'] = "refresh_token";
+    $arrPostData['client_id'] = $this->strClientId;
+    $arrPostData['client_secret'] = $this->strClientSecret;
+    $arrPostData['refresh_token'] = $this->strRefreshToken;
+    $arrPostData['grant_type'] = "refresh_token";
 
     $strUrl = $this->strAuthUrl."/token";
 
-  	$ch = curl_init();
-  	curl_setopt($ch, CURLOPT_URL, $strUrl);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $strUrl);
     curl_setopt($ch, CURLOPT_HEADER, false);
-  	curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($arrPostData));
-  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-  	$result=curl_exec($ch);
-  	curl_close ($ch);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $result=curl_exec($ch);
+    curl_close ($ch);
 
-  	$jsonToken = json_decode($result,true);
+    $jsonToken = json_decode($result,true);
 
-  	$this->strAccessToken = $jsonToken['access_token'];
+    $this->strAccessToken = $jsonToken['access_token'];
   }
 
   public function ListFileAndFolder($parentsId="root", $page=""){
@@ -105,13 +105,13 @@ class GoogleDriveApi{
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $strUrl);
     curl_setopt($ch, CURLOPT_HEADER, false);
-  	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-  	$result=curl_exec($ch);
-  	curl_close ($ch);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $result=curl_exec($ch);
+    curl_close ($ch);
 
-  	$arrListFile = json_decode($result,true);
+    $arrListFile = json_decode($result,true);
 
     if(empty($arrListFile['nextPageToken'])){
       return $arrListFile['files'];
@@ -130,22 +130,22 @@ class GoogleDriveApi{
     $headers[] = "Authorization: OAuth ".urlencode($this->strAccessToken);
 
     $arrPostData = array();
-  	$arrPostData['mimeType'] = "application/vnd.google-apps.folder";
-  	$arrPostData['name'] = $strFolderName;
+    $arrPostData['mimeType'] = "application/vnd.google-apps.folder";
+    $arrPostData['name'] = $strFolderName;
     $arrPostData['parents'] = array($parentsId);
 
-  	$ch = curl_init();
-  	curl_setopt($ch, CURLOPT_URL, $strUrl);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $strUrl);
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrPostData));
-  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-  	$result=curl_exec($ch);
-  	curl_close ($ch);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrPostData));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $result=curl_exec($ch);
+    curl_close ($ch);
 
-  	$jsonData = json_decode($result,true);
+    $jsonData = json_decode($result,true);
 
     return $jsonData['id'];
   }
@@ -159,14 +159,14 @@ class GoogleDriveApi{
     $headers[] = "Authorization: OAuth ".urlencode($this->strAccessToken);
 
     $ch = curl_init();
-  	curl_setopt($ch, CURLOPT_URL, $strUrl);
+    curl_setopt($ch, CURLOPT_URL, $strUrl);
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-  	$result=curl_exec($ch);
-  	curl_close ($ch);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $result=curl_exec($ch);
+    curl_close ($ch);
   }
 
   public function Upload($parentsId="root", $file){
@@ -179,22 +179,22 @@ class GoogleDriveApi{
     $headers[] = "Authorization: OAuth ".urlencode($this->strAccessToken);
 
     $arrPostData = array();
-  	$arrPostData['name'] = basename($file);
+    $arrPostData['name'] = basename($file);
     $arrPostData['parents'] = array($parentsId);
 
-  	$ch = curl_init();
-  	curl_setopt($ch, CURLOPT_URL, $strUrl);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $strUrl);
     curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrPostData));
-  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-  	$result=curl_exec($ch);
-  	curl_close ($ch);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrPostData));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $result=curl_exec($ch);
+    curl_close ($ch);
 
     preg_match_all("|Location: (.*)\\n|U",$result,$arrUploadLinkUrl, PREG_PATTERN_ORDER);
-  	$strUploadLinkUrl = $arrUploadLinkUrl[1][0];
+    $strUploadLinkUrl = $arrUploadLinkUrl[1][0];
 
     // Upload File
     $headers = array();
@@ -202,16 +202,16 @@ class GoogleDriveApi{
     $headers[] = "Authorization: OAuth ".urlencode($this->strAccessToken);
 
     $ch = curl_init();
-  	curl_setopt($ch, CURLOPT_HEADER, false);
-  	curl_setopt($ch, CURLOPT_URL, trim($strUploadLinkUrl));
-  	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-  	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-  	curl_setopt($ch, CURLOPT_BINARYTRANSFER, true) ;
-  	curl_setopt($ch, CURLOPT_POSTFIELDS, file_get_contents($file));
-  	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-  	$result=curl_exec($ch);
-  	curl_close ($ch);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_URL, trim($strUploadLinkUrl));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+    curl_setopt($ch, CURLOPT_BINARYTRANSFER, true) ;
+    curl_setopt($ch, CURLOPT_POSTFIELDS, file_get_contents($file));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $result=curl_exec($ch);
+    curl_close ($ch);
 
     $jsonData = json_decode($result,true);
 
